@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System.Collections.Generic;
 using Sandbox.ModAPI.Ingame;
@@ -20,12 +20,16 @@ internal class StackItemsInCargo : MyGridProgram
 
             if (!cargo.CustomName.Contains("#stack")) continue;
 
+            Echo($"{cargo.CustomName}: cleaned");
+
             var inventory = cargo.GetInventory(0);
             var items = inventory.GetItems();
 
-            for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
-                inventory.TransferItemTo(inventory, itemIndex, stackIfPossible: true);
+            for (int itemIndex = items.Count - 1; itemIndex >= 0; itemIndex--)
+                    inventory.TransferItemTo(inventory, itemIndex, stackIfPossible: true);
         }
+
+        Echo("Finish!");
     }
 
     #endregion
